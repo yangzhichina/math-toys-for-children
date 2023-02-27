@@ -17,7 +17,7 @@ describe('Division', () => {
       });
     });
 
-    it('should be calculated like the children do', () => {
+    it('should be calculated successfully', () => {
       const cases: [number, number][] = [
         [100, 5],
         [105, 5],
@@ -33,6 +33,12 @@ describe('Division', () => {
 
         expect(div.run()).toStrictEqual([q, r]);
       });
+    });
+
+    it('should be calculated like children do', () => {
+      const results = Array.from(new Division(705, 6));
+      const [_a, _b, c, _d] = results[0];
+      expect(c).toBe(6);
     });
   });
 });

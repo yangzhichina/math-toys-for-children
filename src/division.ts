@@ -39,6 +39,41 @@ export class Division {
 
     return [q, r];
   }
+
+  *[Symbol.iterator]() {
+    const dividendDigits = toDigitArray(this.dividend);
+
+    let dividend = 0;
+    let q = 0, q1 = 0, r = 0;
+
+    for (let i = 0, len = dividendDigits.length; i < len; ++i) {
+      dividend += dividendDigits[i];
+
+      if (dividend === 0) {
+        q *= 10;
+        continue;
+      }
+
+      if (dividend < this.divisor) {
+        dividend *= 10;
+        continue;
+      } else {
+        r = dividend % this.divisor;
+
+        const x = [dividend];
+
+        q1 = (dividend - r) / this.divisor;
+        q = q * 10 + q1;
+        dividend = r * 10;
+
+        x.push(q);
+        x.push(q1 * this.divisor);
+        x.push(r);
+
+        yield x;
+      }
+    }
+  }
 }
 
 class DivisionValidator {
